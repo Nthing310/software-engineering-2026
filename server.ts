@@ -18,13 +18,24 @@ let mockPlans: any[] = [
     drone: "DJI M300",
     maxAlt: 50,
     author: "张伟",
-    predefinedPath: [
-      [118.78000, 32.05000], 
-      [118.78500, 32.05500], 
-      [118.79000, 32.05200], 
-      [118.79800, 32.05800], 
-      [118.80500, 32.05600],
-    ],
+    predefinedPath: (() => {
+      const path = [];
+      let lng = 118.78000;
+      let lat = 32.05000;
+      let dLng = 0.0008;
+      let dLat = 0.0005;
+      for (let i = 0; i < 40; i++) {
+        path.push([lng, lat]);
+        dLng += (Math.random() - 0.5) * 0.001;
+        dLat += (Math.random() - 0.5) * 0.001;
+        dLng *= 0.85; // smooth momentum
+        dLat *= 0.85;
+        dLng += 0.0001; // slight drift
+        lng += dLng;
+        lat += dLat;
+      }
+      return path;
+    })(),
     warnings: [],
     historyPath: []
   },

@@ -3,21 +3,8 @@ import { socket } from "./lib/socket";
 import { Play, Square, AlertTriangle, Battery, Navigation, Activity, Map, CheckSquare, BarChart, Settings, Plus, RefreshCw, FileText, Upload } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Polyline, CircleMarker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-// @ts-ignore
-import iconUrl from "leaflet/dist/images/marker-icon.png";
-// @ts-ignore
-import iconShadow from "leaflet/dist/images/marker-shadow.png";
-
-// Setup default Leaflet icon
-let DefaultIcon = L.icon({
-  iconUrl: iconUrl,
-  shadowUrl: iconShadow,
-  iconAnchor: [12, 41]
-});
-L.Marker.prototype.options.icon = DefaultIcon;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -316,14 +303,14 @@ function MapLayer({ telemetry, isFlying }: { telemetry: any, isFlying: boolean }
             <Polyline positions={realPathLatLons} color="#ef4444" weight={4} />
           )}
           {isFlying && telemetry && (
-            <Marker position={currentLatLon}>
+            <CircleMarker center={currentLatLon} radius={6} color="#3b82f6" fillColor="#3b82f6" fillOpacity={1}>
               <Popup className="text-slate-800 font-mono text-xs">
                 <strong>DR-99 ({telemetry.flightMode})</strong><br/>
-                ALT: {telemetry.alt.toFixed(1)}m<br/>
-                SPD: {telemetry.speed.toFixed(1)}m/s<br/>
-                BAT: {telemetry.battery.toFixed(1)}%
+                ALT: {telemetry.alt?.toFixed(1) || '0'}m<br/>
+                SPD: {telemetry.speed?.toFixed(1) || '0'}m/s<br/>
+                BAT: {telemetry.battery?.toFixed(1) || '0'}%
               </Popup>
-            </Marker>
+            </CircleMarker>
           )}
 
           <MapFollower isFlying={isFlying} position={isFlying ? currentLatLon : null} />
