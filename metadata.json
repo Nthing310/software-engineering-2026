@@ -1,0 +1,10 @@
+{
+  "name": "无人机监控指挥系统",
+  "description": "基于后端WebSocket和真实地图API的实时无人机飞行监控平台，包含模拟数据生成与异常预警机制。",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

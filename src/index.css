@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Leaflet smooth marker animation */
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+  transition: transform 0.5s linear !important;
+}
