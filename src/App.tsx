@@ -199,8 +199,8 @@ function MonitorDashboard({ activePlanId }: { activePlanId: string | null }) {
             </div>
           </div>
           <div className="col-span-2 text-xs text-slate-400 font-mono tracking-wider pt-2 border-t border-slate-800 flex justify-between">
-            <span>LNG: <span className="text-white">{telemetry?.lng.toFixed(6) || "---.------"}</span></span>
-            <span>LAT: <span className="text-white">{telemetry?.lat.toFixed(6) || "--.------"}</span></span>
+            <span>LNG: <span className="text-white">{telemetry?.lng?.toFixed(6) || "---.------"}</span></span>
+            <span>LAT: <span className="text-white">{telemetry?.lat?.toFixed(6) || "--.------"}</span></span>
           </div>
         </div>
       </div>
