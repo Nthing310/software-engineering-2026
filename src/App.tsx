@@ -3,6 +3,21 @@ import { socket } from "./lib/socket";
 import { Play, Square, AlertTriangle, Battery, Navigation, Activity, Map, CheckSquare, BarChart, Settings, Plus, RefreshCw, FileText, Upload } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+// @ts-ignore
+import iconUrl from "leaflet/dist/images/marker-icon.png";
+// @ts-ignore
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+
+// Setup default Leaflet icon
+let DefaultIcon = L.icon({
+  iconUrl: iconUrl,
+  shadowUrl: iconShadow,
+  iconAnchor: [12, 41]
+});
+L.Marker.prototype.options.icon = DefaultIcon;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -28,7 +43,7 @@ export default function App() {
       <nav className="w-64 bg-[#0c0e12] border-r border-slate-800 flex flex-col p-4 shrink-0 z-20">
         <h1 className="text-lg font-semibold tracking-tight text-white mb-8 flex items-center gap-2">
           <Navigation className="w-6 h-6 text-blue-600" />
-          UAV Command
+          无人机飞行计划管理系统
         </h1>
 
         <div className="flex flex-col gap-2 flex-grow">
@@ -169,8 +184,8 @@ function MonitorDashboard({ activePlanId }: { activePlanId: string | null }) {
         </div>
 
         <div className="p-4 grid grid-cols-2 gap-4">
-          <StatBox icon={<Navigation className="w-3 h-3 text-slate-500" />} label="Altitude" value={telemetry?.alt.toFixed(1) || "0.0"} unit="m" />
-          <StatBox icon={<Activity className="w-3 h-3 text-slate-500" />} label="Airspeed" value={telemetry?.speed.toFixed(1) || "0.0"} unit="m/s" />
+          <StatBox icon={<Navigation className="w-3 h-3 text-slate-500" />} label="Altitude" value={telemetry?.alt?.toFixed(1) || "0.0"} unit="m" />
+          <StatBox icon={<Activity className="w-3 h-3 text-slate-500" />} label="Airspeed" value={telemetry?.speed?.toFixed(1) || "0.0"} unit="m/s" />
           <div className="col-span-2">
             <div className="flex justify-between text-[10px] text-slate-500 uppercase mb-1">
               <span className="flex items-center gap-1"><Battery className="w-3 h-3 text-slate-500"/>Battery Status</span>
@@ -243,21 +258,6 @@ function StatBox({ icon, label, value, unit }: { icon: ReactNode, label: string,
 // ==========================================
 // MAP COMPONENT (React-Leaflet)
 // ==========================================
-import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-// @ts-ignore
-import iconUrl from "leaflet/dist/images/marker-icon.png";
-// @ts-ignore
-import iconShadow from "leaflet/dist/images/marker-shadow.png";
-
-// Setup default Leaflet icon
-let DefaultIcon = L.icon({
-  iconUrl: iconUrl,
-  shadowUrl: iconShadow,
-  iconAnchor: [12, 41]
-});
-L.Marker.prototype.options.icon = DefaultIcon;
 
 // A component that follows the drone automatically
 function MapFollower({ isFlying, position }: { isFlying: boolean, position: [number, number] | null }) {
