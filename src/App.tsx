@@ -195,15 +195,15 @@ function MonitorDashboard({ activePlanId }: { activePlanId: string | null }) {
       {/* Controls (Bottom Center) */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-10 bg-[#161b22] border border-slate-800 p-2 rounded-lg shadow-2xl">
         {!isFlying ? (
-          <button onClick={startFlight} className="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded text-sm hover:bg-blue-700 transition-colors font-medium">
+          <button key="btn-start" onClick={startFlight} className="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded text-sm hover:bg-blue-700 transition-colors font-medium">
             <Play className="w-4 h-4" fill="currentColor" /> START MISSION
           </button>
         ) : (telemetry?.flightMode !== '返航' ? (
-          <button onClick={stopFlight} className="flex items-center gap-2 bg-red-600 text-white px-6 py-2 rounded text-sm hover:bg-red-700 transition-colors shadow-lg shadow-red-900/20 font-bold">
+          <button key="btn-stop" onClick={stopFlight} className="flex items-center gap-2 bg-red-600 text-white px-6 py-2 rounded text-sm hover:bg-red-700 transition-colors shadow-lg shadow-red-900/20 font-bold">
             <Square className="w-4 h-4" fill="currentColor" /> EMERGENCY RTH
           </button>
         ) : (
-          <button disabled className="flex items-center gap-2 bg-orange-600/50 text-white/80 px-6 py-2 rounded text-sm cursor-not-allowed shadow-lg font-bold">
+          <button key="btn-rth" disabled className="flex items-center gap-2 bg-orange-600/50 text-white/80 px-6 py-2 rounded text-sm cursor-not-allowed shadow-lg font-bold">
              无人机正在返航... 
           </button>
         ))}
